@@ -52,5 +52,13 @@ public class Player : MonoBehaviour {
 
 		// make the call to move the character controller
 		controller.Move(moveDirection * Time.deltaTime);
-	}
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.gameObject.CompareTag("HitBlock") && moveDirection.y > 0)
+        {
+            Destroy(hit.gameObject);
+        }
+    }
 }
