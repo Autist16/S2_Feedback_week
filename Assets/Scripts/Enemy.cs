@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour {
 			// flip the direction of the enemy
 			direction = -direction;
 		} else if (hit.collider.gameObject.CompareTag ("Player")) {
-			// we've hit the player
+            // we've hit the player
 
 			// get player script component
 			Player playerComponent = playerGameObject.GetComponent<Player> ();
@@ -83,8 +83,8 @@ public class Enemy : MonoBehaviour {
 			// reset the player
 			playerComponent.Reset();
 
-			// reset the enemy
-			Reset();
+            // reset the enemy
+            Reset();
 		}
 	}
 }
