@@ -15,6 +15,10 @@ public class Player : MonoBehaviour {
 
 	Vector3 start_position; // start position of the player
 
+    //
+    public Ability Ability;
+    public Vector3 SpawnPoint;
+    public bool TakeDamage;
 
 	void Start()
 	{
@@ -46,6 +50,11 @@ public class Player : MonoBehaviour {
 			if (Input.GetButton("Jump"))
 				moveDirection.y = jumpSpeed;
 		}
+
+        if(Input.GetButtonUp("Fire2") && Ability != null)
+        {
+            Ability.Activate();
+        }
 
 		// apply gravity to movement direction
 		moveDirection.y -= gravity * Time.deltaTime;
