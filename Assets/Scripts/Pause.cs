@@ -8,6 +8,7 @@ public class Pause : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         pause_screen.SetActive(false);
+        paused = false;
 	}
 	
 	// Update is called once per frame
@@ -31,7 +32,7 @@ public class Pause : MonoBehaviour {
     }
     public void Restart_level()
     {
-        //SceneManager.LoadScene(SceneManader.LoadedScene);
+        Application.LoadLevel(Application.loadedLevel);
     }
     public void Quit_Game(){
         Application.Quit();
