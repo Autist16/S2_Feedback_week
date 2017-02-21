@@ -13,6 +13,7 @@ public class HUD : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 		// find the player component
 		playerComponent = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 
