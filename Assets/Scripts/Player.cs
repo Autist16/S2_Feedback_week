@@ -8,7 +8,10 @@ public class Player : MonoBehaviour {
 	public float speed = 6.0F;
 	public float jumpSpeed = 8.0F;
 	public float gravity = 20.0F;
-	private Vector3 moveDirection = Vector3.zero;
+
+    public GameObject particleHitBlock;
+
+	public Vector3 moveDirection = Vector3.zero;
 
 	public int Lives = 3; // number of lives the player hs
 
@@ -61,5 +64,20 @@ public class Player : MonoBehaviour {
 
 		// make the call to move the character controller
 		controller.Move(moveDirection * Time.deltaTime);
-	}
+    }
+
+    // Detects collisions with player and other objects in the scene
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // Detect if the player has collided with a destructible box
+        if (hit.collider.gameObject.CompareTag("HitBlock") && moveDirection.y > 0)
+        {
+            // Get Position of hitblock
+            Transform partPosition = hit.transform;
+            // Trigger particle effect
+            Instantiate(particleHitBlock, partPosition.position, partPosition.rotation);
+            // Destroy box
+            Destroy(hit.gameObject);
+        }
+    }
 }
