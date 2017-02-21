@@ -10,6 +10,8 @@ public class Player : MonoBehaviour {
 	public float gravity = 20.0F;
 	private Vector3 moveDirection = Vector3.zero;
 
+    bool dJump = false;
+
 	public int Lives = 3; // number of lives the player hs
 
 
@@ -34,21 +36,40 @@ public class Player : MonoBehaviour {
 		CharacterController controller = GetComponent<CharacterController>();
 
 
-		// check to see if the player is on the ground
-		if (controller.isGrounded) 
+        // check to see if the player is on the ground
+        if (controller.isGrounded) 
 		{
 			// set the movement direction based on user input and the desired speed
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
 
-			// check to see if the player should jump
-			if (Input.GetButton("Jump"))
-				moveDirection.y = jumpSpeed;
-		}
+            dJump = false;
+            // check to see if the player should jump
+            if (Input.GetButton("Jump"))
+            {
+                moveDirection.y = jumpSpeed;
+                dJump = true;
+            }
+            
 
-		// apply gravity to movement direction
-		moveDirection.y -= gravity * Time.deltaTime;
+          }
+        else if( dJump == true)
+        {
+            //double jump check
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                moveDirection.y = jumpSpeed;
+                dJump = false;
+            }
+
+        }
+
+
+
+        // apply gravity to movement direction
+        moveDirection.y -= gravity * Time.deltaTime;
 
 		// make the call to move the character controller
 		controller.Move(moveDirection * Time.deltaTime);
