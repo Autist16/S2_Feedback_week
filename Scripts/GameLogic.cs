@@ -8,12 +8,8 @@ public class GameLogic : MonoBehaviour {
 
 	public bool gameOver = false; // is the game over?
 
-
-
 	// Use this for initialization
 	void Start () {
-
-
 		// find the player component
 		playerComponent = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 	}
@@ -28,5 +24,4 @@ public class GameLogic : MonoBehaviour {
 			Time.timeScale = 0.0f;
 		}
 	}
-
 }

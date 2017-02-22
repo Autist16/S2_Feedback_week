@@ -8,16 +8,21 @@ public class Player : MonoBehaviour {
 	public float speed = 6.0F;
 	public float jumpSpeed = 8.0F;
 	public float gravity = 20.0F;
-	public Vector3 moveDirection = Vector3.zero;
 
+    public GameObject particleHitBlock;
+
+	public Vector3 moveDirection = Vector3.zero;
     bool dJump = false;
 
 	public int Lives = 3; // number of lives the player hs
-    public int score;
 
 
 	Vector3 start_position; // start position of the player
 
+    //
+    public Ability Ability;
+    public Vector3 SpawnPoint;
+    public bool TakeDamage;
 
 	void Start()
 	{
@@ -37,14 +42,15 @@ public class Player : MonoBehaviour {
 		CharacterController controller = GetComponent<CharacterController>();
 
 
-        // check to see if the player is on the ground
-        if (controller.isGrounded) 
+		// check to see if the player is on the ground
+		if (controller.isGrounded) 
 		{
 			// set the movement direction based on user input and the desired speed
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
 
+			// check to see if the player should jump
             dJump = false;
             // check to see if the player should jump
             if (Input.GetButton("Jump"))
@@ -52,10 +58,8 @@ public class Player : MonoBehaviour {
                 moveDirection.y = jumpSpeed;
                 dJump = true;
             }
-            
-
-          }
-        else if( dJump == true)
+		}
+        else if (dJump == true)
         {
             //double jump check
 
@@ -67,12 +71,30 @@ public class Player : MonoBehaviour {
 
         }
 
+        if(Input.GetButtonUp("Fire2") && Ability != null)
+        {
+            Ability.Activate();
+        }
 
-
-        // apply gravity to movement direction
-        moveDirection.y -= gravity * Time.deltaTime;
+		// apply gravity to movement direction
+		moveDirection.y -= gravity * Time.deltaTime;
 
 		// make the call to move the character controller
 		controller.Move(moveDirection * Time.deltaTime);
-	}
+    }
+
+    // Detects collisions with player and other objects in the scene
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // Detect if the player has collided with a destructible box
+        if (hit.collider.gameObject.CompareTag("HitBlock") && moveDirection.y > 0)
+        {
+            // Get Position of hitblock
+            Transform partPosition = hit.transform;
+            // Trigger particle effect
+            Instantiate(particleHitBlock, partPosition.position, partPosition.rotation);
+            // Destroy box
+            Destroy(hit.gameObject);
+        }
+    }
 }
