@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ability : MonoBehaviour
 {
     public Player player;
-    public float duration = 50;
+    public float duration = 5;
     public float timer = 0;
 
     protected bool finished = false;

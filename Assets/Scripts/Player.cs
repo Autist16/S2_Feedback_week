@@ -12,6 +12,7 @@ public class Player : MonoBehaviour {
     public GameObject particleHitBlock;
 
 	public Vector3 moveDirection = Vector3.zero;
+    bool dJump = false;
 
 	public int Lives = 3; // number of lives the player hs
 
@@ -21,7 +22,7 @@ public class Player : MonoBehaviour {
     //
     public Ability Ability;
     public Vector3 SpawnPoint;
-    public bool TakeDamage;
+    public bool TakeDamage = true;
 
 	void Start()
 	{
@@ -50,9 +51,25 @@ public class Player : MonoBehaviour {
 			moveDirection *= speed;
 
 			// check to see if the player should jump
-			if (Input.GetButton("Jump"))
-				moveDirection.y = jumpSpeed;
+            dJump = false;
+            // check to see if the player should jump
+            if (Input.GetButton("Jump"))
+            {
+                moveDirection.y = jumpSpeed;
+                dJump = true;
+            }
 		}
+        else if (dJump == true)
+        {
+            //double jump check
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                moveDirection.y = jumpSpeed;
+                dJump = false;
+            }
+
+        }
 
         if(Input.GetButtonUp("Fire2") && Ability != null)
         {
