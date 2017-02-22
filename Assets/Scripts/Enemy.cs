@@ -77,14 +77,35 @@ public class Enemy : MonoBehaviour {
 			// get player script component
 			Player playerComponent = playerGameObject.GetComponent<Player> ();
 
-			// remove a life from the player
-			playerComponent.Lives = playerComponent.Lives - 1;
+			if (playerComponent.moveDirection.y < 0 && playerAbove(playerComponent))
+			{
+				Destroy(gameObject);
+				//playerComponent.score += 5;
+
+			}
+			else
+			{
+				// remove a life from the player
+			if (playerComponent.TakeDamage) return;
+				playerComponent.Lives = playerComponent.Lives - 1;
 
 			// reset the player
 			playerComponent.Reset();
 
             // reset the enemy
             Reset();
+		}
+	}
+}
+	bool playerAbove(Player player)
+	{
+		if(player.transform.position.y > transform.position.y+1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 }
