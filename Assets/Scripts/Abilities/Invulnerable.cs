@@ -14,11 +14,13 @@ public class Invulnerable : Ability {
     public override void Update()
     {
         base.Update();
-        player.TakeDamage = false;
         if (finished)
         {
+            // player continue to take damage
             player.TakeDamage = true;
             Destroy(this);
         }
+        else // player can not take damage
+            player.TakeDamage = false;
     }
 }

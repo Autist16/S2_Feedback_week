@@ -85,8 +85,9 @@ public class Enemy : MonoBehaviour {
 			}
 			else
 			{
+                //If play can take damage
 				// remove a life from the player
-			if (playerComponent.TakeDamage) return;
+			if (playerComponent.TakeDamage)
 				playerComponent.Lives = playerComponent.Lives - 1;
 
 			// reset the player
