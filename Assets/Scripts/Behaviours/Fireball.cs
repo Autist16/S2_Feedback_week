@@ -30,7 +30,7 @@ public class Fireball : MonoBehaviour {
             if(col.gameObject.tag == "Projectile")
             {
                 Physics.IgnoreCollision(this.GetComponent<Collider>(), col.collider);
-                return;
+
             }
 
             if (gameObject.tag == "Ground")
@@ -40,7 +40,7 @@ public class Fireball : MonoBehaviour {
             else if (gameObject.tag == "Enemy")
             {
                 Destroy(gameObject, DestroyTimer);
-                //Destroy(this.gameObject, DestroyTimer);
+                Destroy(this.gameObject, DestroyTimer);
             }
             else
                 Destroy(this.gameObject, DestroyTimer);
